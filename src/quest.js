@@ -34,11 +34,11 @@ class Quest extends Creature {
         super(enemies[enemy], 0);
         this.location = Object.keys(locations)[Math.floor(Math.random() * Object.keys(locations).length)];
         this.duration = 0;
-        this.number = Math.ceil(units*(0.5+Math.random())*difficulty*(10/(keypos+1)));
+        this.number = Math.ceil(units*(0.5+Math.random())*difficulty*(10/(keypos+1+Math.random())));
         this._hpPerCreature = Math.round(enemies[enemy] * (1+difficulty/100));
         this.hp = this.number * this._hpPerCreature;
         this.name = "Fight "+this.number+" "+enemy+"("+this.location+")";
-        this.rewards = difficulty*difficulty*(Math.random()+units) + 0.01 * (10+difficulty);
+        this.rewards = difficulty*difficulty*(Math.random()+this.number) + 0.01 * (10+difficulty);
         this.attack = (0.9+0.25*Math.random()) * Math.max (1,this.attack + locations[this.location]);
         this.defense = (0.9+0.25*Math.random()) * Math.max (1,this.defense + locations[this.location]);
     }
