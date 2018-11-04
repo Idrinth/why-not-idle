@@ -7,6 +7,10 @@ class Player extends Unit {
         this.quest = new Quest(1, 0);
         this.name = "Player";
         this.upgrades = upgrades;
+        this.job = new Job('Fated One', [
+            new Upgrade('', Unit, "attack", 110),
+            new Upgrade('', Unit, "defense", 110)
+        ]);
     }
     addUnit()
     {

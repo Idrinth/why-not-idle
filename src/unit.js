@@ -11,6 +11,7 @@ class Unit extends Creature {
         this.kills = 0;
         this.age = 0;
         this.maxLevel = 100+this.rarity*this.rarity;
+        this.job = generateJob();
     }
     tick(boost, quest, upgrades)
     {
@@ -40,6 +41,7 @@ class Unit extends Creature {
             el.appendChild(document.createElement('th'));
             el.firstChild.appendChild(document.createTextNode(this.name));
             el.appendChild(document.createElement('td'));
+            el.appendChild(document.createElement('td'));
             el.lastChild.setAttribute('class', 'level');
             el.appendChild(document.createElement('td'));
             el.appendChild(document.createElement('td'));
@@ -50,20 +52,21 @@ class Unit extends Creature {
             return el;
         })();
         el.children[0].innerHTML = this.name;
-        el.children[1].innerHTML = this.level;
-        el.children[1].setAttribute(
+        el.children[1].innerHTML = this.job.name;
+        el.children[2].innerHTML = this.level;
+        el.children[2].setAttribute(
             'title',
             "Max: "+this.maxLevel+(this.level<this.maxLevel?"\nXP: "+this.xp.toFixed(0)+' of '+Math.ceil(Math.pow(1.5, this.level)*100):'')
         );
-        el.children[1].setAttribute(
+        el.children[2].setAttribute(
             'style',
             "background-size: "+Math.floor(this.xp/Math.ceil(Math.pow(1.5, this.level)*100)*100)+"% 100%;"
         );
-        el.children[2].innerHTML = this.rarity;
-        el.children[3].innerHTML = Math.floor(this.attack);
-        el.children[4].innerHTML = Math.floor(this.defense);
-        el.children[5].innerHTML = Math.floor(15+this.age/100);
-        el.children[6].innerHTML = this.kills;
+        el.children[3].innerHTML = this.rarity;
+        el.children[4].innerHTML = Math.floor(this.attack);
+        el.children[5].innerHTML = Math.floor(this.defense);
+        el.children[6].innerHTML = Math.floor(15+this.age/100);
+        el.children[7].innerHTML = this.kills;
         if (this.knockedout) {
             el.children[0].setAttribute("style", "background: #aa0000");
         } else if(el.children[2].hasAttribute("style")) {
@@ -85,7 +88,7 @@ class Unit extends Creature {
         return;
     }
     fight(attacker, upgrades) {
-        if (super.fight(attacker, [], upgrades)) {
+        if (super.fight(attacker, [], upgrades) && Math.random () > this.level/100) {
             this.knockedout++;
         }
     }

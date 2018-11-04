@@ -12,9 +12,19 @@ class Creature {
         for (let buff of attackerBuffs) {
             attack = buff.affect(attacker, 'attack', attack);
         }
+        if (attacker.job) {
+            for (let buff of attacker.job.modifiers) {
+                attack = buff.affect(attacker, 'attack', attack);
+            }
+        }
         let defense = this.defense;
         for (let buff of defenderBuffs) {
             defense = buff.affect(this, 'defense', defense);
+        }
+        if (this.job) {
+            for (let buff of this.job.modifiers) {
+                defense = buff.affect(this, 'defense', defense);
+            }
         }
         if (attack * (Math.random()+0.1) > defense * (Math.random()+0.1)) {
             return true;
