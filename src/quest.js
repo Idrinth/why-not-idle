@@ -34,7 +34,7 @@ class Quest extends Creature {
         super(enemies[enemy], 0);
         this.location = Object.keys(locations)[Math.floor(Math.random() * Object.keys(locations).length)];
         this.duration = 0;
-        this.number = Math.ceil(units*(0.5+Math.random())*difficulty*(10/(keypos+1+Math.random())));
+        this.number = Math.max (1,Math.ceil(units*(0.5+Math.random())*difficulty*Math.sqrt(10/(keypos+1+Math.random()))));
         this._hpPerCreature = Math.round(enemies[enemy] * (1+difficulty/100));
         this.hp = this.number * this._hpPerCreature;
         this.name = "Fight "+this.number+" "+enemy+"("+this.location+")";
@@ -50,6 +50,7 @@ class Quest extends Creature {
             this.hp--;
             if(this.hp<=(this.number-1)*this._hpPerCreature) {
                 this.number--;
+                attacker.kills++;
             }
             return true;
         }

@@ -24,7 +24,6 @@ class Unit extends Creature {
         }
         if (quest && !this.knockedout) {
             if (quest.fight(this, upgrades)) {
-                this.kills++;
                 xp++;
             }
         } else if(this.knockedout > 0) {

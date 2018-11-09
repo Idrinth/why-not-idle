@@ -47,7 +47,7 @@ class Player extends Unit {
         for(let unit of this.units) {
             if (unit === this) {
                 super.tick(0, this.quest, this.upgrades);
-                this.money -= 0.15;
+                this.money -= 0.025;
             } else {
                 this.money -= unit.tick(this.level/100, this.quest, this.upgrades)/(1+this.level/10);
             }
