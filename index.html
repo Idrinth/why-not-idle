@@ -47,10 +47,23 @@
         <div class="tab">
             <h2>Quest</h2>
             <button onclick="player.quest = null;">Flee</button>
+            <label for="quest-difficulty">Difficulty:</label>
+            <select id="quest-difficulty">
+                <option selected>Intern</option>
+                <option>Apprentice</option>
+                <option>Journeyman</option>
+                <option>Master</option>
+                <option>Epic</option>
+                <option>God</option>
+            </select>
             <table id="quest">
                 <tr>
                     <th>Name</th>
                     <td>Value</td>
+                </tr>
+                <tr>
+                    <th>Difficulty</th>
+                    <td>Intern</td>
                 </tr>
                 <tr>
                     <th>Enemies</th>

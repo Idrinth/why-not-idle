@@ -1,6 +1,8 @@
 class Quest extends Creature {
     constructor(difficulty, units)
     {
+        const diffIndex = document.getElementById('quest-difficulty').selectedIndex;
+        const diffFactor = Math.pow(2, diffIndex/2 -1);
         const enemies = {
             Rats: 5,
             Zombies: 15,
@@ -29,16 +31,17 @@ class Quest extends Creature {
             Caverns: 15,
             Town: 20
         };
-        let keypos = Math.min(Math.floor(Math.random()*Math.random()*10*difficulty), Math.ceil(difficulty*2-1));
-        let enemy = Object.keys(enemies)[keypos];
+        const keypos = Math.min(Math.floor(Math.random()*Math.random()*10*difficulty), Math.ceil(difficulty*2-1));
+        const enemy = Object.keys(enemies)[keypos];
         super(enemies[enemy], 0);
+        this.difficulty = document.getElementById('quest-difficulty').children[diffIndex].innerText;
         this.location = Object.keys(locations)[Math.floor(Math.random() * Object.keys(locations).length)];
         this.duration = 0;
-        this.number = Math.max (1,Math.ceil(units*(0.5+Math.random())*difficulty*Math.sqrt(10/(keypos+1+Math.random()))));
-        this._hpPerCreature = Math.round(enemies[enemy] * (1+difficulty/100));
+        this.number = Math.max (1, Math.ceil(diffFactor * units*(0.5+Math.random())*difficulty*Math.sqrt(10/(keypos+1+Math.random()))));
+        this._hpPerCreature = Math.round(diffFactor * enemies[enemy] * (1+difficulty/100));
         this.hp = this.number * this._hpPerCreature;
         this.name = "Fight "+this.number+" "+enemy+"("+this.location+")";
-        this.rewards = difficulty*difficulty*(Math.random()+this.number) + 0.01 * (10+difficulty);
+        this.rewards = diffFactor * difficulty*difficulty*(Math.random()+this.number) + 0.01 * (10+difficulty);
         this.attack = (0.9+0.25*Math.random()) * Math.max (1,this.attack + locations[this.location]);
         this.defense = (0.9+0.25*Math.random()) * Math.max (1,this.defense + locations[this.location]);
     }
@@ -60,10 +63,11 @@ class Quest extends Creature {
         this.duration++;
         let fields = document.getElementById('quest').getElementsByTagName('td');
         fields[0].innerHTML = this.name;
-        fields[1].innerHTML = this.number + '('+this.hp+'/'+(this.number*this._hpPerCreature)+')';
-        fields[2].innerHTML = Math.floor(this.attack);
-        fields[3].innerHTML = Math.floor(this.defense);
-        fields[4].innerHTML = this.rewards.toFixed(2);
+        fields[1].innerHTML = this.difficulty;
+        fields[2].innerHTML = this.number + '('+this.hp+'/'+(this.number*this._hpPerCreature)+')';
+        fields[3].innerHTML = Math.floor(this.attack);
+        fields[4].innerHTML = Math.floor(this.defense);
+        fields[5].innerHTML = this.rewards.toFixed(2);
         return this.number === 0;
     }
 }
